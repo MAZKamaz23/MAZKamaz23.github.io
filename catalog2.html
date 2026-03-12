@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Механик - Каталог запчастей для КамАЗ и МАЗ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (цвета как в главной) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0b2b3b;        /* глубокий темно-синий как в шапке главной */
+            --bg-darker: #0a2028;       /* для навигации */
+            --accent-orange: #ffb347;    /* теплый оранжевый как в главной */
+            --accent-orange-light: #ffcd7e;
+            --text-light: #e0e0e0;
+            --text-white: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #dde3ed 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ===== ШАПКА (как в главной) ===== */
+        header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4b5f 100%);
+            color: var(--text-white);
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-bottom: 4px solid var(--accent-orange);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-white);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            color: var(--text-light);
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .nav-menu a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            transition: all 0.25s;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+
+        .nav-menu a i {
+            font-size: 1.1rem;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--accent-orange);
+            color: #0b2b3b;
+            transform: translateY(-2px);
+        }
+
+        /* ===== ЗАГОЛОВОК ===== */
+        .section-title {
+            margin: 2rem 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-title h1 {
+            font-size: clamp(2rem, 6vw, 2.8rem);
+            color: #0b2b3b;
+            font-weight: 700;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-orange);
+            margin: 15px auto 0;
+            border-radius: 4px;
+        }
+
+        /* ===== ФИЛЬТРЫ (в стиле главной) ===== */
+        .filters {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(11, 43, 59, 0.1);
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--accent-orange);
+            border-right: 6px solid #1a4b5f;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid #1a4b5f;
+            background: transparent;
+            color: #0b2b3b;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--accent-orange);
+            border-color: var(--accent-orange);
+            color: #0b2b3b;
+        }
+
+        .filter-select {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid #1a4b5f;
+            border-radius: 30px;
+            color: #0b2b3b;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* ===== СЕТКА КАТАЛОГА ===== */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* ===== КАРТОЧКА ТОВАРА ===== */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 180, 70, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(255, 180, 70, 0.25);
+            border-color: var(--accent-orange);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-orange);
+            color: #0b2b3b;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        /* УВЕЛИЧЕННАЯ ОБЛАСТЬ ФОТО */
+        .product-img {
+            height: 280px; /* Увеличено для лучшей видимости */
+            background: linear-gradient(145deg, #e6f0fa, #fff0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .product-img img {
+            max-width: 95%;
+            max-height: 95%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.4s;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            background: white;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            color: #1a4b5f;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0b2b3b;
+            line-height: 1.4;
+            margin-top: 0.2rem;
+        }
+
+        /* ===== ПАГИНАЦИЯ ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .page-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background-color: white;
+            color: #0b2b3b;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid #ffd79c;
+            font-size: 1.1rem;
+        }
+
+        .page-link:hover,
+        .page-link.active {
+            background-color: var(--accent-orange);
+            color: #0b2b3b;
+            border-color: var(--accent-orange);
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(255, 180, 70, 0.4);
+        }
+
+        /* ===== ПОДВАЛ (как в главной) ===== */
+        footer {
+            background: #0b2b3b;
+            color: #ddd;
+            padding: 2rem 0 1rem;
+            margin-top: 3rem;
+            border-top: 5px solid var(--accent-orange);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-orange);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            color: #99b8c7;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.6rem;
+            transition: 0.2s;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent-orange);
+            color: #0b2b3b;
+        }
+
+        .footer-contacts li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #bbb;
+        }
+
+        .footer-contacts i {
+            color: var(--accent-orange);
+            width: 22px;
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2a4a5a;
+            color: #99b8c7;
+            font-size: 0.95rem;
+        }
+
+        /* ===== АДАПТАЦИЯ ===== */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                justify-content: center;
+            }
+            
+            .product-img {
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .catalog-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+
+            .product-img {
+                height: 220px;
+                padding: 0.8rem;
+            }
+
+            .product-info {
+                padding: 1rem;
+            }
+
+            .product-title {
+                font-size: 1.1rem;
+            }
+
+            .nav-menu a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .product-img {
+                height: 280px;
+                padding: 1.2rem;
+            }
+
+            .product-img img {
+                max-width: 90%;
+                max-height: 90%;
+            }
+
+            .nav-menu a {
+                width: calc(50% - 0.3rem);
+                justify-content: center;
+                white-space: normal;
+                text-align: center;
+                padding: 0.6rem 0.2rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+            }
+            
+            .filter-btn, .filter-select {
+                width: 100%;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+
+            .footer-contacts li {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .product-img {
+                height: 240px;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+            }
+            
+            .page-link {
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Механик</h1>
+                    <p>Запчасти для КамАЗ и МАЗ</p>
+                </div>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="https://yandex.ru/maps/org/mekhanik/126821022238?si=ctzr41r8fmkh29k8ry41jbk288"><i class="fas fa-map-marker-alt"></i> Мы здесь</a></li>
+                    <li><a href="catalog.html" class="active"><i class="fas fa-boxes"></i> Каталог</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> О компании</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="section-title">
+            <h1>Каталог товаров</h1>
+        </div>
+
+        <!-- Сетка товаров -->
+        <section class="catalog-grid">
+            <!-- Карточка 1 -->
+            <article class="product-card">
+                <div class="product-badge">Хит</div>
+                <div class="product-img">
+                    <img src="https://sun9-27.userapi.com/s/v1/ig2/b-cRig7F28OWvkRyBaBMAM2x1vrpMVLfL79x4expv53vgSPQSV4il0JYcEmjvyDOggLwCCNiaNLG4fC_gNR2tgE8.jpg?quality=95&crop=0,0,960,1280&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,960x1280&from=bu&cs=960x0" alt="Патрубок силикон">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Запчасти</div>
+                    <h3 class="product-title">Патрубок (силикон)</h3>
+                </div>
+            </article>
+
+            <!-- Карточка 2 -->
+            <article class="product-card">
+                <div class="product-img">
+                    <img src="https://sun9-55.userapi.com/s/v1/ig2/A9y-sFgcnJUB_e7mAEjy1IZFjTLDH_CeYjz0eAbE5v_sXiZ0OERPfrpavEPnTtPAnZkAnfI-DGiNfPhjnB4vnww4.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,1080x1440,1280x1707,1440x1920,1920x2560&from=bu&cs=1280x0" alt="Трещётка МАЗ">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Запчасти</div>
+                    <h3 class="product-title">Трещётка МАЗ широкий шлиц</h3>
+                </div>
+            </article>
+
+            <!-- Карточка 3 -->
+            <article class="product-card">
+                <div class="product-img">
+                    <img src="https://sun9-17.userapi.com/s/v1/ig2/X-QLwk0JGPgW_ffeqyNHyDfxBjJnKS_3dzU9LPH3GzICaPwJCGbSVsmg0NVRGfbjqlrNJAHB8V1v4LZccdwBaJ_k.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,1080x1440,1280x1707,1440x1920,1920x2560&from=bu&cs=1280x0" alt="Фара противотуманная">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Оптика</div>
+                    <h3 class="product-title">Фара противотуманная LED</h3>
+                </div>
+            </article>
+
+            <!-- Карточка 4 -->
+            <article class="product-card">
+                <div class="product-img">
+                    <img src="https://sun9-15.userapi.com/s/v1/ig2/REBEsafzkQFvqS3DUw_u33k-_RTGE-Fm5v4FiLoqF647Nymh8exG-7zJw5gW3idKXq_1j4Sodz9rOY6hPquPnTUe.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080,2560x1920&from=bu&cs=1280x0" alt="Фильтр воздушный КамАЗ">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Фильтры</div>
+                    <h3 class="product-title">Фильтр воздушный КамАЗ</h3>
+                </div>
+            </article>
+
+            <!-- Карточка 5 -->
+            <article class="product-card">
+                <div class="product-img">
+                    <img src="https://sun9-69.userapi.com/s/v1/ig2/PGQ5zmHP9d62HvlJoJ4SDHprnDSztBMKUKZDK2zDgkhhaTuW9HhXS3BpmKlP8VAz8aCNq7m2xZVOdc-TbYKMLL68.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080,2560x1920&from=bu&cs=1280x0" alt="Фильтр воздушный МАЗ">
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Фильтры</div>
+                    <h3 class="product-title">Фильтр воздушный МАЗ</h3>
+                </div>
+            </article>
+        </section>
+
+        <!-- Пагинация -->
+        <section class="pagination">
+            <a href="catalog.html" class="page-link">←</a>
+            <a href="catalog.html" class="page-link">1</a>
+            <a href="catalog2.html" class="page-link active">2</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <div class="footer-social">
+                        <a href="https://t.me/mechanic_23" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://max.ru/u/f9LHodD0cOK5h79FInLvT3KB-Sl2u9aVBBKOdzunVlhmGSxV2TwkONHvRVs" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul class="footer-contacts">
+                        <li><i class="fas fa-map-marker-alt"></i> г. Усть-Лабинск, ул. Заполотняная, 15Г</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+79189630637">8 (918) 963-06-37</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:MAZKAMAZ23@mail.ru">MAZKAMAZ23@mail.ru</a></li>
+                        <li><i class="fas fa-clock"></i> Пн-Пт: 08-17, Сб-Вс: 08-15</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 ИП "Ефанов". Все права защищены.</p>
+                <p>ИНН: 235612513362</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

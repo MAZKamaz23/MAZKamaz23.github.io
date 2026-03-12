@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Механик - О компании | Запчасти для КамАЗ и МАЗ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ (цвета как в главной) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0b2b3b;        /* глубокий темно-синий как в шапке главной */
+            --bg-darker: #0a2028;       /* для навигации */
+            --accent-orange: #ffb347;    /* теплый оранжевый как в главной */
+            --accent-orange-light: #ffcd7e;
+            --text-light: #e0e0e0;
+            --text-white: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e6e9f0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== ШАПКА (как в главной) ===== */
+        header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4b5f 100%);
+            color: var(--text-white);
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-bottom: 4px solid var(--accent-orange);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-white);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            color: var(--text-light);
+        }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .nav-menu a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            transition: all 0.25s;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+
+        .nav-menu a i {
+            font-size: 1.1rem;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--accent-orange);
+            color: #0b2b3b;
+            transform: translateY(-2px);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: linear-gradient(rgba(11, 43, 59, 0.95), rgba(26, 75, 95, 0.9)), url('https://images.unsplash.com/photo-1593941707882-a5bba5338fe2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 4px solid var(--accent-orange);
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+        }
+
+        /* ===== ЗАГОЛОВКИ ===== */
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: #0b2b3b;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .page-title .divider {
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent-orange);
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        /* ===== ABOUT CONTENT ===== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            padding-right: 20px;
+        }
+
+        .about-text h2 {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            color: #0b2b3b;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .about-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+            border: 3px solid var(--accent-orange);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            margin-bottom: 80px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 180, 70, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px rgba(255, 180, 70, 0.25);
+            border-color: var(--accent-orange);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--accent-orange);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #0b2b3b;
+        }
+
+        .feature-card p {
+            flex-grow: 1;
+            color: #555;
+        }
+
+        /* ===== VALUES SECTION ===== */
+        .values {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4b5f 100%);
+            color: white;
+            padding: 70px 0;
+            margin-bottom: 70px;
+            border-top: 4px solid var(--accent-orange);
+            border-bottom: 4px solid var(--accent-orange);
+        }
+
+        .values h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            color: white;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .value-item i {
+            font-size: 3rem;
+            color: var(--accent-orange);
+            margin-bottom: 20px;
+        }
+
+        .value-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .value-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== TEAM SECTION ===== */
+        .team {
+            margin-bottom: 80px;
+        }
+
+        .team h2 {
+            text-align: center;
+            color: #0b2b3b;
+            margin-bottom: 40px;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .team-member {
+            background-color: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 180, 70, 0.2);
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(255, 180, 70, 0.25);
+            border-color: var(--accent-orange);
+        }
+
+        /* УВЕЛИЧЕННЫЕ ФОТО КОМАНДЫ */
+        .team-img {
+            height: 320px; /* Увеличено с 280px до 320px */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-bottom: 3px solid var(--accent-orange);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover .team-img {
+            transform: scale(1.02);
+        }
+
+        .team-member:nth-child(1) .team-img {
+            background-image: url('https://img.freepik.com/premium-vector/silhouette-man-sitting-armchair_734126-1257.jpg?semt=ais_hybrid&w=740&q=80');
+        }
+        
+        .team-member:nth-child(2) .team-img {
+            background-image: url('https://avatars.mds.yandex.net/i?id=018859ae07893ff4731a155a267b71e6_l-5333794-images-thumbs&n=13');
+        }
+        
+        .team-member:nth-child(3) .team-img {
+            background-image: url('https://avatars.mds.yandex.net/get-shedevrum/12154803/img_e7d26ccf223211efb722dec7a036f011/orig');
+        }
+
+        .team-info {
+            padding: 25px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .team-info h3 {
+            color: #0b2b3b;
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+
+        .team-info p {
+            color: #666;
+            font-style: italic;
+        }
+
+        .team-info p:last-of-type {
+            font-style: normal;
+            color: #444;
+            margin-top: 10px;
+        }
+
+        /* ===== CONTACT CTA ===== */
+        .contact-cta {
+            background: linear-gradient(135deg, var(--accent-orange), #ff9f4b);
+            color: white;
+            text-align: center;
+            padding: 60px 30px;
+            border-radius: 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 30px rgba(255, 180, 70, 0.3);
+        }
+
+        .contact-cta h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+        }
+
+        .contact-cta p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #0b2b3b;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            background-color: white;
+            color: #0b2b3b;
+            transform: translateY(-3px);
+            border-color: #0b2b3b;
+        }
+
+        /* ===== ПОДВАЛ (как в главной) ===== */
+        footer {
+            background: #0b2b3b;
+            color: #ddd;
+            padding: 3rem 0 1.5rem;
+            margin-top: 2rem;
+            border-top: 5px solid var(--accent-orange);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-orange);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            color: #99b8c7;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-orange);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.6rem;
+            transition: 0.2s;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent-orange);
+            color: #0b2b3b;
+        }
+
+        .footer-contacts li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #bbb;
+        }
+
+        .footer-contacts i {
+            color: var(--accent-orange);
+            width: 22px;
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #2a4a5a;
+            color: #99b8c7;
+            font-size: 0.95rem;
+        }
+
+        /* ===== АДАПТАЦИЯ ===== */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .nav-menu {
+                justify-content: center;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .about-text {
+                padding-right: 0;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .nav-menu a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-img {
+                height: 280px; /* Уменьшено для мобильных, но все еще крупно */
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+            
+            .footer-contacts li {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 50px 0;
+            }
+            
+            .nav-menu a {
+                width: calc(50% - 0.3rem);
+                justify-content: center;
+                white-space: normal;
+                text-align: center;
+                padding: 0.6rem 0.2rem;
+            }
+            
+            .team-img {
+                height: 240px;
+            }
+            
+            .contact-cta {
+                padding: 40px 20px;
+                border-radius: 20px;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .nav-menu a {
+                width: 100%;
+            }
+            
+            .team-img {
+                height: 200px;
+            }
+        }
+
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Механик</h1>
+                    <p>Запчасти для КамАЗ и МАЗ</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="https://yandex.ru/maps/org/mekhanik/126821022238?si=ctzr41r8fmkh29k8ry41jbk288"><i class="fas fa-map-marker-alt"></i> Мы здесь</a></li>
+                    <li><a href="catalog.html"><i class="fas fa-boxes"></i> Каталог</a></li>
+                    <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i> О компании</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>О компании "Механик"</h2>
+            <p>Более 15 лет мы обеспечиваем надежными запчастями владельцев грузовой техники КамАЗ и МАЗ в г. Усть-Лабинск. Качество, надежность и профессионализм — наш главный принцип.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Title -->
+        <div class="container page-title">
+            <h1>Наша история и миссия</h1>
+            <div class="divider"></div>
+        </div>
+
+        <!-- About Content -->
+        <section class="container about-content">
+            <div class="about-text">
+                <h2>Кто мы такие</h2>
+                <p>Магазин автозапчастей "Механик" основан в 2010 году. Начав с небольшого склада запчастей, сегодня мы стали одним из ведущих поставщиков запчастей для КамАЗ и МАЗ в г. Усть-Лабинск и районе.</p>
+                <p>Наша специализация — это оригинальные и качественные аналоги запчастей для грузовой техники. Мы тщательно отбираем поставщиков и проверяем каждую деталь, чтобы обеспечить наших клиентов только надежными комплектующими.</p>
+                <p>Мы понимаем, что от качества запчастей зависит не только работоспособность техники, но и безопасность на дорогах. Поэтому мы несем ответственность за каждый товар, который продаем.</p>
+                <p>Сегодня "Механик" — это не просто магазин, а команда профессионалов, готовых помочь с подбором запчастей, консультацией по техническим вопросам и подбором аналогов.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://sun9-36.userapi.com/s/v1/ig2/KErXNZbSofpPvObtSX5mzwMp9uf6FL1ZYQAAzLnrnHsk8Nv33JsONYjRmW3wE6XrOWzoBuQxSaqi5c5Wwcps4BiK.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0" alt="Наш магазин снаружи" loading="lazy">
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="container features">
+            <div class="page-title">
+                <h1>Наши преимущества</h1>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Гарантия доставки</h3>
+                    <p>Все заказы доставляются строго в указанные сроки. Сорванные сроки бывают крайне редко и компенсируются.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruble-sign"></i>
+                    </div>
+                    <h3>Выгодные цены</h3>
+                    <p>Приятные и всегда актуальные цены на продаваемый товар. Регулярные скидки для постоянных клиентов.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Профессиональная консультация</h3>
+                    <p>Наши специалисты с опытом работы от 5 лет помогут подобрать нужную деталь именно под вашу модель.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="values">
+            <div class="container">
+                <h2>Наши ценности</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Надежность</h3>
+                        <p>Мы держим свое слово и выполняем обязательства перед клиентами</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <i class="fas fa-star"></i>
+                        <h3>Качество</h3>
+                        <p>Только проверенные запчасти от надежных производителей</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <i class="fas fa-clock"></i>
+                        <h3>Пунктуальность</h3>
+                        <p>Соблюдаем сроки доставки и выполнения заказов</p>
+                    </div>
+                    
+                    <div class="value-item">
+                        <i class="fas fa-headset"></i>
+                        <h3>Поддержка</h3>
+                        <p>Всегда на связи для решения вопросов клиентов</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="container team">
+            <div class="page-title">
+                <h1>Наша команда</h1>
+                <div class="divider"></div>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-img"></div>
+                    <div class="team-info">
+                        <h3>Ефанов Дмитрий Николаевич</h3>
+                        <p>Основатель магазина "Механик"</p>
+                        <p>Опыт работы с грузовой техникой - более 15 лет</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-img"></div>
+                    <div class="team-info">
+                        <h3>Крючин Вадим Денисович</h3>
+                        <p>Администратор магазина</p>
+                        <p>Курирует работу сотрудников. Напрямую взаимодействует с клиентами и помогает с выбором.</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="team-img"></div>
+                    <div class="team-info">
+                        <h3>Рыбалко Вадим Генадьевич</h3>
+                        <p>Продавец-консультант</p>
+                        <p>Профессионально помогает клиентам с подбором запчастей и техническими вопросами.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact CTA -->
+        <section class="container">
+            <div class="contact-cta">
+                <h2>Нужна помощь с подбором запчастей?</h2>
+                <p>Наши специалисты всегда готовы проконсультировать вас по наличию и совместимости деталей</p>
+                <a href="https://t.me/mechanic_23" class="cta-button"><i class="fas fa-phone-alt"></i> Связаться с нами</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Социальные сети</h3>
+                    <div class="footer-social">
+                        <a href="https://t.me/mechanic_23" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://max.ru/u/f9LHodD0cOK5h79FInLvT3KB-Sl2u9aVBBKOdzunVlhmGSxV2TwkONHvRVs" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul class="footer-contacts">
+                        <li><i class="fas fa-map-marker-alt"></i> г. Усть-Лабинск, ул. Заполотняная, 15Г</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+79189630637">8 (918) 963-06-37</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:MAZKAMAZ23@mail.ru">MAZKAMAZ23@mail.ru</a></li>
+                        <li><i class="fas fa-clock"></i> Пн-Пт: 08-17, Сб-Вс: 08-15</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 ИП "Ефанов". Все права защищены.</p>
+                <p>ИНН: 235612513362</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

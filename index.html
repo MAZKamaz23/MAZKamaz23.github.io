@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Механик - Запчасти для КамАЗ и МАЗ | Главная (адаптив)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ СБРОСЫ И БАЗОВЫЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            line-height: 1.5;
+            color: #222;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* ===== ШАПКА И ЛОГОТИП (АДАПТИВ) ===== */
+        .header {
+            background: linear-gradient(135deg, #0b2b3b 0%, #1a4b5f 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #ffb347;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .header-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .work-time, .header-phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            font-size: 0.95rem;
+        }
+
+        .work-time i, .header-phone i {
+            font-size: 1.3rem;
+            color: #ffb347;
+        }
+
+        .phone-number {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== НАВИГАЦИЯ (МОБИЛЬНАЯ ДРУЖЕЛЮБНАЯ) ===== */
+        .nav {
+            background: #0a2028;
+            padding: 0 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-menu li a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 18px;
+            border-radius: 30px;
+            transition: all 0.25s;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu li a i {
+            font-size: 1.1rem;
+        }
+
+        .nav-menu li a.active,
+        .nav-menu li a:hover {
+            background: #ffb347;
+            color: #0b2b3b;
+            transform: translateY(-2px);
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        main {
+            flex: 1;
+        }
+
+        /* ----- СЛАЙДЕР (полностью адаптивный) ----- */
+        .slider-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0 20px;
+            padding: 0 10px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            aspect-ratio: 16 / 9; /* сохраняет пропорции на любом экране */
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.25);
+            background: #1a2a33;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: 100%;
+        }
+
+        .slider-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #2c3e4e; /* fallback */
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 26px;
+            transition: all 0.25s;
+            z-index: 15;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .slider-arrow:hover {
+            background: #ffb347;
+            color: #0b2b3b;
+            border-color: transparent;
+        }
+
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
+
+        /* ----- ПРЕИМУЩЕСТВА (АДАПТИВНАЯ СЕТКА) ----- */
+        .advantages {
+            padding: 50px 0;
+            background: #fff;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #0b2b3b;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #ffb347;
+            margin: 15px auto 0;
+            border-radius: 4px;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .advantage-card {
+            background: #f4f8fa;
+            padding: 30px 20px;
+            border-radius: 24px;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 50, 70, 0.1);
+            border-color: #ffb347;
+        }
+
+        .advantage-icon {
+            font-size: 3rem;
+            color: #ffb347;
+            margin-bottom: 15px;
+        }
+
+        .advantage-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #0b2b3b;
+        }
+
+        .advantage-card p {
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        /* ===== ПОДВАЛ (АДАПТИВ) ===== */
+        .footer {
+            background: #0b2b3b;
+            color: #ddd;
+            padding: 50px 0 20px;
+            margin-top: auto;
+            border-top: 5px solid #ffb347;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: #ffb347;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.6rem;
+            transition: 0.2s;
+        }
+
+        .footer-social a:hover {
+            background: #ffb347;
+            color: #0b2b3b;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ffb347;
+            padding-left: 5px;
+        }
+
+        .footer-contacts li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #bbb;
+        }
+
+        .footer-contacts i {
+            color: #ffb347;
+            width: 22px;
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2a4a5a;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: #99b8c7;
+            font-size: 0.95rem;
+        }
+
+        /* ===== МЕДИА ЗАПРОСЫ: ПЛАНШЕТЫ И ТЕЛЕФОНЫ ===== */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                justify-content: center;
+            }
+            .header-info {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                padding: 5px 0 10px;
+                gap: 8px;
+                scrollbar-width: thin;
+            }
+            .nav-menu li a {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            .nav-menu li a i {
+                font-size: 1rem;
+            }
+            
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            .work-time, .header-phone {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .advantages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 20px;
+            }
+
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 22px;
+            }
+            .arrow-left { left: 10px; }
+            .arrow-right { right: 10px; }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+            .logo-icon {
+                font-size: 2rem;
+            }
+            .work-time div, .header-phone div {
+                display: flex;
+                flex-direction: column;
+                font-size: 0.9rem;
+            }
+            .nav-menu li a {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .advantage-card {
+                padding: 25px 15px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-section h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .footer-social {
+                justify-content: center;
+            }
+            .footer-contacts li {
+                justify-content: center;
+            }
+        }
+
+        /* для совсем маленьких */
+        @media (max-width: 360px) {
+            .slider-container {
+                aspect-ratio: 4/3; /* чуть выше для удобства */
+            }
+            .nav-menu li a {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* дополнительные штрихи */
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <header class="header">
+       <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Механик</h1>
+                    <p>Запчасти для КамАЗ и МАЗ</p>
+                </div>
+            </div>
+                
+            <div class="header-info">
+                <div class="work-time">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Пн-Пт: 08:00-17:00</strong>
+                        <span>Сб-Вс: 08:00-15:00</span>
+                    </div>
+                </div>
+                
+                <div class="header-phone">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <a href="tel:+79189630637" class="phone-number">8 (918) 963-06-37</a>
+                        <span>Бесплатный звонок по РФ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Навигация (адаптивный скролл на мобильных) -->
+        <nav class="nav">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="https://yandex.ru/maps/org/mekhanik/126821022238?si=ctzr41r8fmkh29k8ry41jbk288"><i class="fas fa-map-marker-alt"></i> Мы здесь</a></li>
+                <li><a href="catalog.html"><i class="fas fa-boxes"></i> Каталог</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> О компании</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- СЛАЙДЕР (теперь адаптивный по высоте) -->
+    <section class="slider-section">
+        <div class="slider-container" id="mainSlider">
+            <div class="slider-track" id="sliderTrack">
+                <!-- слайды генерируются скриптом -->
+            </div>
+            <button class="slider-arrow arrow-left" id="arrowLeft" aria-label="Предыдущий слайд"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-arrow arrow-right" id="arrowRight" aria-label="Следующий слайд"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="advantages">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Гарантия доставки</h3>
+                    <p>Все заказы доставляются строго в указанные сроки</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-warehouse"></i></div>
+                    <h3>Собственный склад</h3>
+                    <p>15 000+ наименований всегда в наличии</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Техподдержка</h3>
+                    <p>Консультации по подбору запчастей</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-ruble-sign"></i></div>
+                    <h3>Выгодные цены</h3>
+                    <p>Приятные и актуальные цены на товар</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-history"></i></div>
+                    <h3>Опыт 16 лет</h3>
+                    <p>Работаем с 2010 года</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <p style="font-size:1.3rem; color:white;">Наши соцсети</p>
+                    </div>
+                    <div class="footer-social">
+                        <a href="https://t.me/mechanic_23" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://max.ru/u/f9LHodD0cOK5h79FInLvT3KB-Sl2u9aVBBKOdzunVlhmGSxV2TwkONHvRVs" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul class="footer-contacts">
+                        <li><i class="fas fa-map-marker-alt"></i> г. Усть-Лабинск, ул. Заполотняная, 15Г</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+79189630637" style="color:#ddd;">8 (918) 963-06-37</a></li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:MAZKAMAZ23@mail.ru" style="color:#ddd;">MAZKAMAZ23@mail.ru</a></li>
+                        <li><i class="fas fa-clock"></i> Пн-Пт: 08-17, Сб-Вс: 08-15</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 ИП "Ефанов". Все права защищены.</p>
+                <p>ИНН: 235612513362</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипт слайдера (полностью адаптирован) -->
+    <script>
+        (function() {
+            const imageUrls = [
+                "https://sun9-36.userapi.com/s/v1/ig2/KErXNZbSofpPvObtSX5mzwMp9uf6FL1ZYQAAzLnrnHsk8Nv33JsONYjRmW3wE6XrOWzoBuQxSaqi5c5Wwcps4BiK.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-45.userapi.com/s/v1/ig2/WwDLvxn-HFYrMzazmYRfovHuhETF--7v937nD8VHX4RN90ZrcioR0HUVeDzL70eN-cQsr9EiIyZlkh4SNXWGgo9X.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-60.userapi.com/s/v1/ig2/r2NGQ7wRVGK20MNa-ns3C9PXcLT2eXOkmLU9Ln-EJJZOZO0o7cGgdCk__BuGbEv7o-bmZSDqBHN5PR0xdD3AzztD.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-53.userapi.com/s/v1/ig2/DEV19d2EmAC2zDn1y1QLQwrTVkn1tqKtp1TFDvT3KzHQtu5TJGjAZf6Cmnv3qfF25uc_uO-afxiD3DX5t1HB6jzT.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-79.userapi.com/s/v1/ig2/ly5lrAVy5QDm1FlTGLe9_KxR3T785qnZxlzMaB8U5JVarn8HtsNoORXz9UArxmJcOoiiRaid-wJew22EQhpPdaIz.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-39.userapi.com/s/v1/ig2/FvbswMmRbljxqVndXiX6mCbQiuOlv6UriNyOMsfWTv-qXHV9AlwbwVD1oO7IZQl3obsLGZUGOgdUHyfedzy5akco.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0",
+                "https://sun9-73.userapi.com/s/v1/ig2/zl1XAsg6tyJ0QTheMSSi_dNDskGwSiQoOw4H1xj4wX50g6zRCp5-70Zn8HqOJAAfSeZXw1mQ2NZcRUC1iel7N5J4.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280&from=bu&cs=1280x0"
+            ];
+
+            const track = document.getElementById('sliderTrack');
+            const arrowLeft = document.getElementById('arrowLeft');
+            const arrowRight = document.getElementById('arrowRight');
+            
+            let currentIndex = 0;
+            let slideCount = imageUrls.length;
+            let autoInterval;
+
+            function renderSlides() {
+                track.innerHTML = '';
+                imageUrls.forEach((url, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'slider-slide';
+                    slide.style.backgroundImage = `url('${url}')`;
+                    slide.setAttribute('aria-label', `Слайд ${index + 1}`);
+                    track.appendChild(slide);
+                });
+                slideCount = imageUrls.length;
+                if (slideCount === 0) return;
+                currentIndex = 0;
+                updateTransform();
+            }
+
+            function updateTransform() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            function nextSlide() {
+                if (slideCount === 0) return;
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateTransform();
+            }
+
+            function prevSlide() {
+                if (slideCount === 0) return;
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateTransform();
+            }
+
+            function resetAutoPlay() {
+                if (autoInterval) clearInterval(autoInterval);
+                autoInterval = setInterval(nextSlide, 8000);
+            }
+
+            if (imageUrls.length) {
+                arrowLeft.addEventListener('click', function() { prevSlide(); resetAutoPlay(); });
+                arrowRight.addEventListener('click', function() { nextSlide(); resetAutoPlay(); });
+
+                renderSlides();
+                resetAutoPlay();
+
+                const sliderContainer = document.getElementById('mainSlider');
+                sliderContainer.addEventListener('mouseenter', () => clearInterval(autoInterval));
+                sliderContainer.addEventListener('mouseleave', resetAutoPlay);
+            } else {
+                arrowLeft.style.display = 'none';
+                arrowRight.style.display = 'none';
+            }
+
+            // функция для обновления изображений (можно вызывать из консоли)
+            window.sliderUpdateImages = function(newUrlsArray) {
+                if (!Array.isArray(newUrlsArray) || newUrlsArray.length === 0) return;
+                imageUrls.length = 0;
+                imageUrls.push(...newUrlsArray);
+                renderSlides();
+                resetAutoPlay();
+            };
+        })();
+    </script>
+</body>
+</html>
